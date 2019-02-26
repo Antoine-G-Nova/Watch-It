@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition/Création film{% endblock %}
+
+{% block body %}
+<div class="container text-light mt-4">
+   <h2 class="mb-5">
+   {% if update_mode %}   
+        Modification d'un film
+   {% else %}
+        Création d'un film
+   {% endif %}
+   </h2>
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.overview) }}
+    {{ form_row(form.genres) }}
+
+    <button type="submit" class="btn btn-warning">
+    {% if update_mode %}
+        Modifier
+    {% else %}
+        Ajouter
+    {% endif %}
+    </button>
+
+{{ form_end(form) }}
+</div>
+{% endblock %}

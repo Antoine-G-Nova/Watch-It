@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{film_data.title}}{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid bg-dark mt-4 mb-3 px-5">
+
+
+    <h2 class="text-light text-center">{{ film_data.title }}</h2>
+
+    <div class="row mt-3 justify-content-center text-light">
+
+        <div class=" col-sm-12 col-lg-10 py-3">
+
+            <img src=" {{ film_data.image }} " class="rounded-lg shadow-lg float-md-left text-center  mr-4" style="width: 350px">
+            
+            {% if film_data.overview is not null %}            
+                <p class="text-justify mb-2"><em class="font-weight-bold ">Synopsis : </em> <br> {{ film_data.overview }} </p>
+            {% endif %}
+
+            <p class="mb-4"><em class="font-weight-bold">Genre :</em>
+
+                {% for genre in film_data.genres %}
+                
+                    <a href="{{ path('film_category', { id : genre.id } )}}" class="btn btn-sm border-dark shadow cat-link" >
+                            {{ genre.name }}                        
+                    </a>
+                    {% if not loop.last %}
+                        /
+                    {% endif %}
+                    
+                {% endfor %} 
+            </p>
+
+            <em class="font-weight-bold">Casting : </em>
+
+            <ul class="actor-list d-flex flex-wrap">
+            {% for role in film_data.casting %}
+                <li class="actor media m-2">
+                    {% if role.person.image is not null %}
+                    <img src="https://image.tmdb.org/t/p/w200/{{ role.person.image }}" class="rounded-circle" style="width: 50px">
+                    {% endif %}
+                    
+                    <div class="media-body ml-1 align-self-center">
+                            <i class="fas fa-angle-right"></i> {{role.person.name}} <em>({{ role.characterName}})</em>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+
+            
+            <a href="{{ path('admin_film_edit', { id : film_data.id }) }}" class="float-right text-warning">Editer <i class="fas fa-edit "></i></a>
+        </div>
+
+        
+
+    </div>
+</div>
+
+{% endblock body %}

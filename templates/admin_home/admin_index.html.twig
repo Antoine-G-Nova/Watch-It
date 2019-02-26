@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminHomeController!{% endblock %}
+
+{% block body %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Bienvenu Administrateur</h1>
+    <p class="lead">ici vous pouvez créer et modifier le contenu du site</p>
+  </div>
+</div>
+<div class="container mt-5">
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>Movie</h4>
+            <a href="{{ path('admin_film_list') }}" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
+            <a href="{{ path('admin_film_add') }}"><i class="fas fa-edit"></i> Créer un film</a>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>Département</h4>
+            <a href="" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
+            <a href=""><i class="fas fa-edit"></i> Créer un départements</a>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>Casting</h4>
+            <a href="" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
+            <a href=""><i class="fas fa-edit"></i> Créer un casting</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
