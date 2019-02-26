@@ -100,3 +100,11 @@ footer {
     min-width:8em;
     margin-right: 2em;
 }
+
+
+.alert {
+    width: 400px;
+    top: 90px;
+    right:0px;
+    z-index: 10000;
+}

@@ -1,27 +1,31 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    <h2 class="text-center text-light mt-5">Liste des jobs</h2>
+    <h2 class="text-center text-light mt-5">Liste des Castings</h2>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Départements</th>
+                <th>Nom Personnage</th>
+                <th>Nom acteur/actrice</th>
+                <th>Film</th>
+                <th>Order credit</th>
                 <th class="text-right">Supprimer/Modifier</th>
             </tr>
         </thead>
         <tbody>
-        {% for job in jobs %}
+        {% for casting in castings %}
             <tr>
-                <th>{{job.name}}</th>
-                <td> {{job.departement.name}}</td>
+                <th class="w-25">{{ casting.characterName }}</th>
+                <td>{{ casting.person.name }}</td>
+                <td>{{ casting.movie.title }}</td>
+                <td>{{ casting.orderCredit }}</td>
                 <td>
-                    <a href="{{ path('admin_job_edit', { id : job.id }) }}" class="float-right">
+                    <a href="{{ path('admin_casting_edit', { id : casting.id }) }}" class="float-right">
                         Editer
                         <i class="fas fa-edit "></i>
                     </a>
-                    <a href="{{ path('admin_job_delete', { id : job.id }) }}" class="float-right text-danger mr-2">
+                    <a href="{{ path('admin_casting_delete', { id : casting.id }) }}" class="float-right text-danger mr-2">
                         Supprimer
                         <i class="fas fa-trash-alt"></i>
                     </a>
@@ -33,7 +37,6 @@
     </table>
 </div>
 
-{# flash message #}
 {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{label}} mt-2 font-weight-bold position-fixed animated bounceOutRight delay-2s">
@@ -41,5 +44,4 @@
             </div>
         {% endfor %}
 {% endfor %}
-
 {% endblock %}

@@ -40,4 +40,13 @@
         </tbody>
     </table>
 </div>
+
+{# flash message #}
+{% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}} mt-2 font-weight-bold position-fixed animated bounceOutRight delay-2s">
+                {{ message }}
+            </div>
+        {% endfor %}
+{% endfor %}
 {% endblock %}

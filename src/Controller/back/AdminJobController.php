@@ -13,7 +13,7 @@ use App\Repository\JobRepository;
 /**
 * @Route("/admin", name="admin_")
 */
-class JobController extends AbstractController
+class AdminJobController extends AbstractController
 {
     /**
      * @Route("/job/add", name="job_add",methods= {"GET", "POST"})
@@ -26,6 +26,8 @@ class JobController extends AbstractController
             $job = new Job();
         }
 
+        $edit_mode = $job->getId();
+
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
@@ -33,11 +35,25 @@ class JobController extends AbstractController
             $em->persist($job);
             $em->flush();
 
+            if($edit_mode){
+
+                $this->addFlash(
+                    'success',
+                    'Votre job a bien été modifié'
+                );
+            } else {
+                $this->addFlash(
+                    'success',
+                    'Votre job a bien été créé'
+                );
+            }
+
             return $this->redirectToRoute('admin_job_list');
         }
 
         return $this->render('admin_job/add_job.html.twig', [
             'form' => $form->createView(),
+            'edit_mode' => $edit_mode
         ]);
     }
 
@@ -60,6 +76,11 @@ class JobController extends AbstractController
     {
         $em->remove($job);
         $em->flush();
+
+        $this->addFlash(
+            'danger',
+            'Votre job a bien été supprimé'
+        );
 
         return $this->redirectToRoute('admin_job_list');
     }

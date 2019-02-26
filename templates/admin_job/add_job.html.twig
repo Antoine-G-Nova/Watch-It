@@ -4,13 +4,25 @@
 
 {% block body %}
 <div class="container mt-5 bg-light py-4">
-    <h2 class="mb-5">Ajouter un job</h2>
+    <h2 class="mb-5">
+        {% if edit_mode %}
+                Modifier un job
+        {% else %}
+                Ajouter un job
+        {% endif %}
+    </h2>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
     {{ form_rest(form) }}
 
-    <button type="submit" class="btn btn-warning">Ajouter</button>
+    <button type="submit" class="btn btn-warning">
+        {% if edit_mode %}
+            Modifier
+        {% else %}
+            Ajouter
+        {% endif %}
+    </button>
 
     {{ form_end(form) }}
     

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +23,7 @@ class Casting
     private $character_name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer") 
      */
     private $order_credit;
 

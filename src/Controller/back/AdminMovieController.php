@@ -23,6 +23,8 @@ class AdminMovieController extends AbstractController
             $movie = new Movie();
         }
         
+        $edit_mode = $movie->getId();
+
         $form = $this->createForm(MovieEditType::class, $movie);
         $form->handleRequest($request);
 
@@ -30,7 +32,20 @@ class AdminMovieController extends AbstractController
             $manager->persist($movie);
             $manager->flush();
 
-            return $this->redirectToRoute('film_show', [
+            if($edit_mode){
+
+                $this->addFlash(
+                    'success',
+                    'Votre film a bien été modifié'
+                );
+            } else {
+                $this->addFlash(
+                    'success',
+                    'Votre film a bien été créé'
+                );
+            }
+
+            return $this->redirectToRoute('admin_film_list', [
                 'id' => $movie->getId()
             ]);
         }
@@ -38,7 +53,7 @@ class AdminMovieController extends AbstractController
 
         return $this->render('admin_movie/add_film.html.twig', [
             'form' => $form->createView(),
-            'update_mode' => $movie->getId() != null // Permet de savoir on est en création ou en update
+            'update_mode' => $edit_mode // Permet de savoir on est en création ou en update
         ]);
     }
 
@@ -61,6 +76,11 @@ class AdminMovieController extends AbstractController
     {
         $em->remove($movie);
         $em->flush();
+
+        $this->addFlash(
+            'danger',
+            'Votre film a bien été supprimé'
+        );
 
         return $this->redirectToRoute('admin_film_list');
     }

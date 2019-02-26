@@ -26,6 +26,8 @@ class AdminDepartementController extends AbstractController
             $departement = new Departement();
         }
 
+        $edit_mode = $departement->getId();
+
         $form = $this->createForm(DepartementType::class, $departement);
         $form->handleRequest($request);
 
@@ -33,11 +35,25 @@ class AdminDepartementController extends AbstractController
             $em->persist($departement);
             $em->flush();
 
+            if($edit_mode){
+
+                $this->addFlash(
+                    'success',
+                    'Votre département a bien été modifié'
+                );
+            } else {
+                $this->addFlash(
+                    'success',
+                    'Votre département a bien été créé'
+                );
+            }
+
             return $this->redirectToRoute('admin_departement_list');
         }
 
         return $this->render('admin_departement/add_departement.html.twig', [
             'form' => $form->createView(),
+            'edit_mode' => $edit_mode,
         ]);
     }
 
@@ -60,6 +76,11 @@ class AdminDepartementController extends AbstractController
     {
         $em->remove($departement);
         $em->flush();
+
+        $this->addFlash(
+            'danger',
+            'Votre département a bien été supprimé'
+        );
 
         return $this->redirectToRoute('admin_departement_list');
     }
