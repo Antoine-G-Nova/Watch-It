@@ -3,7 +3,7 @@
 {% block title %}Edition/Création film{% endblock %}
 
 {% block body %}
-<div class="container text-light mt-4">
+<div class="container text-light mt-5">
    <h2 class="mb-5">
    {% if update_mode %}   
         Modification d'un film
@@ -12,7 +12,8 @@
    {% endif %}
    </h2>
 
-{{ form_start(form) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
     {{ form_errors(form) }}
     {{ form_row(form.title) }}
     {{ form_row(form.image) }}
@@ -27,6 +28,6 @@
     {% endif %}
     </button>
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
 </div>
 {% endblock %}

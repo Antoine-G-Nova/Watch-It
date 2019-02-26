@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminMovieController extends AbstractController
 {
     /**
-     * @Route("/add/film", name="film_add",methods= {"GET", "POST"})
-     * @Route("/edit/film/{id}", name="film_edit", methods= {"GET", "POST"}, requirements={"id"="\d+"})
+     * @Route("/film/add", name="film_add",methods= {"GET", "POST"})
+     * @Route("/film/edit/{id}", name="film_edit", methods= {"GET", "POST"}, requirements={"id"="\d+"})
      */
     public function add(Request $request, EntityManagerInterface $manager, Movie $movie = null)
     {

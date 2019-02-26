@@ -1,35 +1,33 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    <h2 class="text-center text-light mt-5">Liste des films</h2>
+    <h2 class="text-center text-light mt-5">Liste des départements</h2>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Titre</th>
-                <th scope="col">Categorie</th>
-                <th scope="col">Description</th>
-                <th scope="col">Supprimer/Modifier</th>
+                <th>Nom</th>
+                <th>job</th>
+                <th class="text-right">Supprimer/Modifier</th>
             </tr>
         </thead>
         <tbody>
-        {% for film in films_data %}
+        {% for departement in departements %}
             <tr>
-                <th>{{film.title}}</th>
-                <td> {% for genre in film.genres %}
-                        {{genre.name}}
+                <th>{{departement.name}}</th>
+                <td> {% for job in departement.job %}
+                        {{job.name}}
                     {% if not loop.last %}
                         /
                     {% endif %}
                 {% endfor %}
                 </td>
-                <td class="w-50">{{film.overview|slice(0,120)}}...</td>
                 <td>
-                    <a href="{{ path('admin_film_edit', { id : film.id }) }}" class="float-right">
+                    <a href="{{ path('admin_departement_edit', { id : departement.id }) }}" class="float-right">
                         Editer
                         <i class="fas fa-edit "></i>
                     </a>
-                    <a href="{{ path('admin_film_delete', { id : film.id }) }}" class="float-right text-danger">
+                    <a href="{{ path('admin_departement_delete', { id : departement.id }) }}" class="float-right text-danger mr-2">
                         Supprimer
                         <i class="fas fa-trash-alt"></i>
                     </a>

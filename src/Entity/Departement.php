@@ -24,7 +24,7 @@ class Departement
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="departement")
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="departement", orphanRemoval=true)
      */
     private $job;
 
@@ -79,5 +79,10 @@ class Departement
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

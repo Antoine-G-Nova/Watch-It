@@ -9,26 +9,48 @@
     <p class="lead">ici vous pouvez créer et modifier le contenu du site</p>
   </div>
 </div>
-<div class="container mt-5">
+<div class="container w-50 mt-5">
     <div class="card mb-3">
         <div class="card-body ">
-            <h4>Movie</h4>
-            <a href="{{ path('admin_film_list') }}" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
-            <a href="{{ path('admin_film_add') }}"><i class="fas fa-edit"></i> Créer un film</a>
+            <h4>
+                Movie
+                <a href="{{ path('admin_film_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="{{ path('admin_film_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            </h4>
+            
+            
         </div>
     </div>
+
     <div class="card mb-3">
         <div class="card-body ">
-            <h4>Département</h4>
-            <a href="" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
-            <a href=""><i class="fas fa-edit"></i> Créer un départements</a>
+            <h4>
+                Département
+                <a href="{{ path('admin_departement_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="{{ path('admin_departement_add') }} "class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            </h4>
         </div>
     </div>
+
     <div class="card mb-3">
         <div class="card-body ">
-            <h4>Casting</h4>
-            <a href="" class="mr-3 "><i class="fas fa-eye"></i> Voir la liste</a>
-            <a href=""><i class="fas fa-edit"></i> Créer un casting</a>
+            <h4>
+                Job
+                <a href="{{ path('admin_job_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="{{ path('admin_job_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            </h4>
+            
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>
+                Casting
+                <a href="" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            </h4>
+            
         </div>
     </div>
 </div>
