@@ -19,37 +19,30 @@ class AdminMovieController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $manager, Movie $movie = null)
     {
+        $flashMessage = 'Votre film a bien été modifié';
+
         if(!$movie) {
             $movie = new Movie();
+            $flashMessage = 'Votre film a bien été créé';
         }
         
-        $edit_mode = $movie->getId();
-
+        
         $form = $this->createForm(MovieEditType::class, $movie);
         $form->handleRequest($request);
-
+        
         if($form->isSubmitted() && $form->isValid()) {
             $manager->persist($movie);
             $manager->flush();
+            
+            $this->addFlash(
+                'success',
+                $flashMessage
+            );
 
-            if($edit_mode){
-
-                $this->addFlash(
-                    'success',
-                    'Votre film a bien été modifié'
-                );
-            } else {
-                $this->addFlash(
-                    'success',
-                    'Votre film a bien été créé'
-                );
-            }
-
-            return $this->redirectToRoute('admin_film_list', [
-                'id' => $movie->getId()
-            ]);
+            return $this->redirectToRoute('admin_film_list');
         }
-
+        
+        $edit_mode = $movie->getId();
 
         return $this->render('admin_movie/add_film.html.twig', [
             'form' => $form->createView(),

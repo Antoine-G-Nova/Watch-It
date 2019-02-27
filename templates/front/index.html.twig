@@ -3,29 +3,45 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
+<div class="container-fluid">
 
-<div class="container-fluid bg-light p-2 d-flex align-items-center justify-content-center">
+    <div class="row">
 
-    <h5 class="mr-3 mb-0">Trier les résultats par :</h5>
+        <div class=" col-2 p-3 text-light bg-darker ">
 
-    <form class="form-inline">
-        {{form_start(form)}}
+            <h5 class="text-center p-2 bg-dark mt-3 mb-3">Rechercher par :</h5>
+            {{form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-        <div class="form-group ml-2">
+
             {{ form_row(form.name) }}
+
+            {{ form_row(form.title) }}
+
+            <button type="submit" class="btn btn-warning btn ml-2">Rechercher</button>
+
+            {{form_end(form)}}
+
+            <h5 class="text-center text-light p-2 bg-dark mt-4 mb-3">Derniers ajouts :</h5>
+
+            {% for movie in lastest_movies %}
+
+            <div class="media mb-3">
+                <img src="{{ movie.image }}" class="align-self-center mr-3" style="width:25px">
+                <div class="media-body align-self-center mr-3">
+                    <a href="{{ path('film_show', { id : movie.id }) }}"><h6 class="mt-0 text-light ">{{ movie.title }}</h6></a>
+                </div>
+            </div>
+
+            {% endfor %}
+
         </div>
-        <button type="submit" class="btn btn-warning btn-sm ml-2">Trier</button>
 
-        {{form_end(form)}}
-    </form>
+        <div class="col-10 px-3">
 
-</div>
+            <h2 class="text-light mt-4 ml-4">Films populaires</h2>
+            {% include "front/index.template.html.twig" %}
 
-<div class="container-fluid pt-5 px-3">
-
-    <h2 class="text-light ml-4">Films populaires</h2>
-
-    {% include "front/index.template.html.twig" %}
-
+        </div>
+    </div>
 </div>
 {% endblock %}

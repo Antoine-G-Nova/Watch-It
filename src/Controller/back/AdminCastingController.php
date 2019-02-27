@@ -22,35 +22,31 @@ class AdminCastingController extends AbstractController
     public function addAndEdit(Request $request, EntityManagerInterface $em,
     Casting $casting = null)
     {
+        $flashMessage = 'Votre casting a bien été modifié';
+
         if(!$casting){
             $casting = new Casting();
+            $flashMessage = 'Votre casting a bien été créé';
         }
 
-        $edit_mode = $casting->getId();
-
+        
         $form = $this->createForm(CastingType::class, $casting);
         $form->handleRequest($request);
-
+        
         if($form->isSubmitted() && $form->isValid()) {
             $em->persist($casting);
             $em->flush();
-
-            if($edit_mode){
-
-                $this->addFlash(
-                    'success',
-                    'Votre casting a bien été modifié'
-                );
-            } else {
-                $this->addFlash(
-                    'success',
-                    'Votre casting a bien été créé'
-                );
-            }
-
+            
+            $this->addFlash(
+                'success',
+                $flashMessage
+            );
+            
             return $this->redirectToRoute('admin_casting_list');
         }
-
+        
+        $edit_mode = $casting->getId();
+        
         return $this->render('admin_casting/add_casting.html.twig', [
             'form' => $form->createView(),
             'edit_mode' => $edit_mode,

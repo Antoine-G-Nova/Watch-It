@@ -47,15 +47,7 @@ class MovieEditType extends AbstractType
                 ]
             ])
 
-            ->add('genres', EntityType::class, [
-                'class' => Genre::class,
-                'choice_label' => 'name',
-                'expanded' => true ,
-                'multiple' => true ,
-                'attr' => [
-                    'class' => 'd-flex flex-wrap ',
-                ],
-            ]);
+            ->add('genres');
 
     }
 

@@ -2,12 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Genre;
+use App\Entity\MovieSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\MovieSearch;
-use App\Entity\Genre;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MovieSearchType extends AbstractType
 {
@@ -17,10 +19,21 @@ class MovieSearchType extends AbstractType
             ->add('name', EntityType::class, [
                 'class' => Genre::class,
                 'choice_label' => 'name',
+                'required' => false,
+                'help' => 'Choix multiple possible',
                 'label'=> 'Genre:',
                 'attr'=> [
                     'class'=> 'form-control ml-1'
                 ]
+            ])
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'required' => false,
+                'constraints' =>
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Au moins {{ limit }}'
+                    ])
             ])
         ;
     }

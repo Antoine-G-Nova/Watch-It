@@ -11,6 +11,8 @@ class MovieSearch
 
     private $name;
 
+    private $title;
+
 
     /**
      * Get the value of id
@@ -48,6 +50,26 @@ class MovieSearch
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     */ 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @return  self
+     */ 
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
         return $this;
     }

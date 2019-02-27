@@ -22,8 +22,11 @@ class AdminJobController extends AbstractController
     public function editAndAdd(Request $request, EntityManagerInterface $em,
     Job $job = null)
     {
+        $flashMessage = 'Votre job a bien été modifié';
+
         if( !$job ) {
             $job = new Job();
+            $flashMessage = 'Votre job a bien été créé';
         }
 
         $edit_mode = $job->getId();
@@ -35,18 +38,10 @@ class AdminJobController extends AbstractController
             $em->persist($job);
             $em->flush();
 
-            if($edit_mode){
-
                 $this->addFlash(
                     'success',
-                    'Votre job a bien été modifié'
+                    $flashMessage
                 );
-            } else {
-                $this->addFlash(
-                    'success',
-                    'Votre job a bien été créé'
-                );
-            }
 
             return $this->redirectToRoute('admin_job_list');
         }

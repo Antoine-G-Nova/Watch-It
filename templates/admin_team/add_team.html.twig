@@ -1,29 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edition/Création film{% endblock %}
-
 {% block nav %}
     {% include 'admin_home/admin_nav.html.twig' %}
 {% endblock %}
 
 
+{% block title %}Edition/Création Team{% endblock %}
+
 {% block body %}
 <div class="container text-light mt-5">
    <h2 class="mb-5">
     {% if update_mode %}   
-            Modification d'un film
+            Modification d'une team
     {% else %}
-            Création d'un film
+            Création d'une team
     {% endif %}
    </h2>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     
-    {{ form_errors(form) }}
-    {{ form_row(form.title) }}
-    {{ form_row(form.image) }}
-    {{ form_row(form.overview) }}
-    {{ form_row(form.genres) }}
+    {{ form_row(form.movie) }}
+    {{ form_row(form.person) }}
+    {{ form_row(form.job) }}
 
     <button type="submit" class="btn btn-warning">
         {% if update_mode %}

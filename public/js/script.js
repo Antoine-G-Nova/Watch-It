@@ -6,3 +6,7 @@ $(window).scroll(function() {
     $('.navbar').removeClass('shrink'); }
 });
 
+$('select').select2({
+    theme:"classic"
+});
+

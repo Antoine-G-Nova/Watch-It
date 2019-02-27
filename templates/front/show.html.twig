@@ -19,6 +19,20 @@
                 <p class="text-justify mb-2"><em class="font-weight-bold ">Synopsis : </em> <br> {{ film_data.overview }} </p>
             {% endif %}
 
+            {% if director is not null %}
+            <p>
+                <em class="font-weight-bold">Réalisateur :</em>
+                <div class="media m-2">
+                    {% if director.image is not null %}
+                    <img src="https://image.tmdb.org/t/p/w200/{{ director.image }}" style="width: 50px">
+                    {% endif %}
+                    
+                    <div class="media-body ml-1 align-self-center">
+                            <i class="fas fa-angle-right"></i><em>{{ director.name }}</em>
+                    </div>
+                </div>
+            </p>
+            {% endif %}
             <p class="mb-4"><em class="font-weight-bold">Genre :</em>
 
                 {% for genre in film_data.genres %}

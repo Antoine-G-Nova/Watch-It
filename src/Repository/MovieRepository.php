@@ -16,6 +16,7 @@ use App\Entity\Genre;
  */
 class MovieRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Movie::class);
@@ -53,7 +54,36 @@ class MovieRepository extends ServiceEntityRepository
         return $query;
     }
 
-    
+    public function FindByTitle($title, $categoryId = null){
+
+        $query = $this->createQueryBuilder('m')
+                ->select('m.title')
+                ->addSelect('m.id')
+                ->addSelect('m.image')
+                ->where('m.title LIKE :word')
+                ->setParameter('word', '%'.$title.'%');
+
+        if($categoryId) {
+            $query->innerJoin('m.genres', 'g')
+            ->andWhere('g.id = :id')
+            ->setParameter('id', $categoryId->getId() );
+        }
+
+        $query->getQuery();
+
+        return $query;
+    }
+
+    public function FindLastMovie()
+    {
+        $query = $this->createQueryBuilder('m')
+                ->orderBy('m.id', 'DESC')
+                ->setMaxResults( 20 )
+                ->getQuery()
+                ->execute();
+                
+        return $query;
+    }
 
     // /**
     //  * @return Movie[] Returns an array of Movie objects

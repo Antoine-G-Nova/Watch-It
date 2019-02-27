@@ -20,29 +20,42 @@ class MainController extends AbstractController
      */
     public function index(MovieRepository $repo, PaginatorInterface $paginator, Request $request)
     {
-
+        //********* Gestion de la recherche ***********/
         $search = new MovieSearch();
         $form = $this->createForm(MovieSearchType::class, $search);
         $form->handleRequest($request);
 
-        if($search->getName()) {
+
+
+        if($search->getTitle()) {
+dump($search->getName());
+            $filmsData = $paginator->paginate(
+                $repo->findByTitle($search->getTitle(),$search->getName()),
+                $request->query->getInt('page', 1),
+                20
+            );
+        } elseif($search->getName()){
             $filmsData = $paginator->paginate(
                 $repo->findByCategory($search->getName()->getId()),
                 $request->query->getInt('page', 1),
                 20
             );
         } else {
-
             $filmsData = $paginator->paginate(
                 $repo->findAllCustom(),
                 $request->query->getInt('page', 1),
                 20
             );
         }
+        //******** Fin recherche ***********/
+
+        // Je récupère les 20 derniers films
+        $lastMovies = $repo->FindLastMovie();
 
         return $this->render('front/index.html.twig', [
             'films_data' => $filmsData,
-            'form'       => $form->createView()
+            'form'       => $form->createView(),
+            'lastest_movies' => $lastMovies,
         ]);
     }
 
@@ -52,9 +65,19 @@ class MainController extends AbstractController
      */
     public function show(Movie $movie)
     {
+        // Je récupère le nom du réalisateur
+        $teams = $movie->getTeams();
+        $director = null;
+        foreach($teams as $team){
+
+            if($team->getJob()->getName() == 'Director'){
+                $director = $team->getPerson();
+            }
+        }
 
         return $this->render('front/show.html.twig', [
-            'film_data' => $movie
+            'film_data' => $movie,
+            'director' => $director,
         ]);
     }
 

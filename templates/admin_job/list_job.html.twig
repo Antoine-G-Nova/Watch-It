@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Departement{% endblock %}
+{% block nav %}
+    {% include 'admin_home/admin_nav.html.twig' %}
+{% endblock %}
+
 {% block body %}
 
-    <h2 class="text-center text-light mt-5">Liste des jobs</h2>
+    <h2 class="text-center text-light mt-5">
+        Liste des jobs
+        <a href="{{ path('admin_job_add') }}" class="btn btn-success"><i class="fas fa-edit"></i> Créer nouveau</a>
+    </h2>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>

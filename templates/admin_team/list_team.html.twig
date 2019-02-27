@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Departement{% endblock %}
+
 {% block nav %}
     {% include 'admin_home/admin_nav.html.twig' %}
 {% endblock %}
@@ -7,35 +7,31 @@
 {% block body %}
 
     <h2 class="text-center text-light mt-5">
-        Liste des départements
-        <a href="{{ path('admin_departement_add') }}" class="btn btn-success"><i class="fas fa-edit"></i> Créer nouveau</a>
+        Liste des teams
+        <a href="{{ path('admin_team_add') }}" class="btn btn-success"><i class="fas fa-edit"></i> Créer nouveau</a>
     </h2>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>job</th>
-                <th class="text-right">Supprimer/Modifier</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Nom personne</th>
+                <th scope="col">Job</th>
+                <th scope="col">Supprimer/Modifier</th>
             </tr>
         </thead>
         <tbody>
-        {% for departement in departements %}
+        {% for team in teams_data %}
             <tr>
-                <th>{{departement.name}}</th>
-                <td> {% for job in departement.job %}
-                        {{job.name}}
-                    {% if not loop.last %}
-                        /
-                    {% endif %}
-                {% endfor %}
-                </td>
+                <th>{{ team.movie.title }}</th>
+                <td class="w-25">{{ team.person.name }}</td>
+                <td class="w-25">{{ team.job.name }}</td>
                 <td>
-                    <a href="{{ path('admin_departement_edit', { id : departement.id }) }}" class="float-right">
+                    <a href="{{ path('admin_team_edit', { id : team.id }) }}" class="float-right">
                         Editer
                         <i class="fas fa-edit "></i>
                     </a>
-                    <a href="{{ path('admin_departement_delete', { id : departement.id }) }}" class="float-right text-danger mr-2">
+                    <a href="{{ path('admin_team_delete', { id : team.id }) }}" class="float-right text-danger">
                         Supprimer
                         <i class="fas fa-trash-alt"></i>
                     </a>

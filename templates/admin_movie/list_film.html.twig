@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
+
+{% block nav %}
+    {% include 'admin_home/admin_nav.html.twig' %}
+{% endblock %}
+
 {% block body %}
 
-    <h2 class="text-center text-light mt-5">Liste des films</h2>
+    <h2 class="text-center text-light mt-5">
+        Liste des films
+        <a href="{{ path('admin_film_add') }}" class="btn btn-success"><i class="fas fa-edit"></i> Créer nouveau</a>
+    </h2>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>
@@ -15,15 +23,15 @@
         <tbody>
         {% for film in films_data %}
             <tr>
-                <th>{{film.title}}</th>
+                <th>{{ film.title }}</th>
                 <td> {% for genre in film.genres %}
-                        {{genre.name}}
+                        {{ genre.name }}
                     {% if not loop.last %}
                         /
                     {% endif %}
                 {% endfor %}
                 </td>
-                <td class="w-50">{{film.overview|slice(0,120)}}...</td>
+                <td class="w-50">{{ film.overview|slice(0,120) }}...</td>
                 <td>
                     <a href="{{ path('admin_film_edit', { id : film.id }) }}" class="float-right">
                         Editer

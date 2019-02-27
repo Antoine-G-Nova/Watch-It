@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminHomeController!{% endblock %}
+{% block title %}Back Office!{% endblock %}
+{% block nav %}
+    {% include 'admin_home/admin_nav.html.twig' %}
+{% endblock %}
 
 {% block body %}
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Bienvenu Administrateur</h1>
-    <p class="lead">ici vous pouvez créer et modifier le contenu du site</p>
-  </div>
-</div>
+
+
 <div class="container w-50 mt-5">
     <div class="card mb-3">
         <div class="card-body ">
@@ -49,6 +48,17 @@
                 Casting
                 <a href="{{ path('admin_casting_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
                 <a href="{{ path('admin_casting_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            </h4>
+            
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>
+                Team
+                <a href="{{ path('admin_team_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="{{ path('admin_team_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
             </h4>
             
         </div>
