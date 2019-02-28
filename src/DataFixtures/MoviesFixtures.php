@@ -11,20 +11,26 @@ use App\Entity\Movie;
 use App\Entity\Person;
 use App\Entity\Casting;
 use App\Entity\Departement;
+use App\Repository\JobRepository;
 use App\Repository\GenreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\DepartementRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Repository\JobRepository;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 
-class MoviesFixtures extends Fixture
+class MoviesFixtures extends Fixture implements FixtureGroupInterface
 {
 
     private $repo;
     private $depRepo;
     private $jobRepo;
+
+    public static function getGroups(): array
+    {
+        return ['group2'];
+    }
 
     public function __construct(GenreRepository $genRepo, DepartementRepository $repository, JobRepository $jobRepo) {
 
@@ -55,18 +61,19 @@ class MoviesFixtures extends Fixture
         $manager->flush(); // J'enregistre
 
         // Boucle pour créer les films et les acteurs associés 
-        for( $j = 1 ; $j <= 20 ; $j++ ) {
+        for( $j = 1 ; $j <= 30 ; $j++ ) {
 
             // Requête pour obtenir une liste de film.
             $filmResponse = Unirest\Request::get('https://api.themoviedb.org/3/discover/movie?api_key=68d344e1b7babcb0dba7864b416715d5&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page='.$j);
 
-            $filmsData = $filmResponse->body->{'results'};            
+            $filmsData = $filmResponse->body->{'results'};
             
             foreach( $filmsData as $key => $film) { // On boucle sur le tableau de film
-            
+
                 $newFilm = new Movie;
                 $newFilm->setTitle($film->{'title'})
-                        ->setImage('https://image.tmdb.org/t/p/w500/'. $film->{'poster_path'});
+                        ->setImage('https://image.tmdb.org/t/p/w500/'. $film->{'poster_path'})
+                        ->setReleaseDate(new \DateTime($film->{'release_date'}));
                 
                 if($film->{'overview'}) {
 
@@ -92,24 +99,11 @@ class MoviesFixtures extends Fixture
 
                 $crewData = $castingResponse->body->{'crew'};
 
-                if( count($castingData) == 0 ) {
-                    $nbActorMax = -1;
-                } elseif( count($castingData) == 1 ) {
-                    $nbActorMax = 0;
-                } elseif( count($castingData) == 2 ) {
-                    $nbActorMax = 1;
-                } elseif( count($castingData) == 3 ) {
-                    $nbActorMax = 2;
-                } elseif( count($crewData) == 4 ) {
-                    $nbCrew = 3;
-                } elseif( count($castingData) == 5 ) {
-                    $nbActorMax = 4;
-                } elseif( count($castingData) == 6 ) {
-                    $nbActorMax = 5;
-                } elseif( count($castingData) == 7 ) {
-                    $nbActorMax = 6;
-                } elseif( count($castingData) > 7 ) {
-                    $nbActorMax = 7;
+
+                if( count($castingData) <= 10){
+                    $nbActorMax = count($castingData) - 1;
+                } else {
+                    $nbActorMax = 10;
                 }
 
                 for( $i = 0; $i <= $nbActorMax; $i++) {
@@ -131,24 +125,10 @@ class MoviesFixtures extends Fixture
                     $manager->persist($casting);
                 }
 
-                if( count($crewData) == 0 ) {
-                    $nbCrew = -1;
-                } elseif( count($crewData) == 1 ) {
-                    $nbCrew = 0;
-                } elseif( count($crewData) == 2 ) {
-                    $nbCrew = 1;
-                } elseif( count($crewData) == 3 ) {
-                    $nbCrew = 2;
-                } elseif( count($crewData) == 4 ) {
-                    $nbCrew = 3;
-                } elseif( count($crewData) == 5 ) {
-                    $nbCrew = 4;
-                } elseif( count($crewData) == 6 ) {
-                    $nbCrew = 5;
-                } elseif( count($crewData) == 7 ) {
-                    $nbCrew = 6;
-                } elseif( count($crewData) > 7 ) {
-                    $nbCrew = 7;
+                if( count($crewData) <= 10){
+                    $nbCrew = count($crewData) - 1;
+                } else {
+                    $nbCrew = 10;
                 }
 
                 for( $i = 0; $i <= $nbCrew; $i++) {
@@ -161,6 +141,12 @@ class MoviesFixtures extends Fixture
                     }
                     $manager->persist($person);
 
+                    if( !($this->depRepo->findOneBy(['name'=>$crewData[$i]->{'department'}]) )) {
+                        $departement = new Departement();
+                        $departement->setName($crewData[$i]->{'department'});
+                        $manager->persist($departement);
+                    }
+                    $manager->flush();
 
                     if(!($this->jobRepo->findOneBy(['name'=>$crewData[$i]->{'job'}])) ) {
                         $job = new Job();

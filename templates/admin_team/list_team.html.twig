@@ -13,21 +13,19 @@
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">Titre</th>
-                <th scope="col">Nom personne</th>
-                <th scope="col">Job</th>
-                <th scope="col">Supprimer/Modifier</th>
+            <tr >
+                <th>Nom personne</th>
+                <th class="text-center">Job</th>
+                <th class="pr-3 text-right">Supprimer/Modifier</th>
             </tr>
         </thead>
         <tbody>
         {% for team in teams_data %}
-            <tr>
-                <th>{{ team.movie.title }}</th>
-                <td class="w-25">{{ team.person.name }}</td>
-                <td class="w-25">{{ team.job.name }}</td>
+            <tr class="">
+                <td class="w-25 pl-3">{{ team.person.name }}</td>
+                <td class="w-50 text-center">{{ team.job.name }}</td>
                 <td>
-                    <a href="{{ path('admin_team_edit', { id : team.id }) }}" class="float-right">
+                    <a href="{{ path('admin_team_edit', { id : team.id }) }}" class="float-right ml-1">
                         Editer
                         <i class="fas fa-edit "></i>
                     </a>
@@ -41,6 +39,9 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
+<div class="container p-0">
+    <a href="{{ path('admin_film_list') }}" class="btn btn-info">Retour</a>
 </div>
 
 {# flash message #}

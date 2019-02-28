@@ -18,6 +18,7 @@ class Team
      */
     private $id;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="teams")
      * @ORM\JoinColumn(nullable=false)
@@ -35,6 +36,10 @@ class Team
      * @ORM\JoinColumn(nullable=false)
      */
     private $job;
+
+
+
+
 
 
     public function getId(): ?int
@@ -78,4 +83,9 @@ class Team
         return $this;
     }
 
+
+    public function __toString()
+    {
+        return "";
+    }
 }

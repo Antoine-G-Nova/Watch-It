@@ -46,9 +46,14 @@ class Movie
     private $casting;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Team", mappedBy="movie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Team", mappedBy="movie", orphanRemoval=true)
      */
     private $teams;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $release_date;
 
    
 
@@ -193,5 +198,17 @@ class Movie
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getReleaseDate()
+    {
+        return $this->release_date;
+    }
+
+    public function setReleaseDate(\DateTimeInterface $release_date): self
+    {
+        $this->release_date = $release_date;
+
+        return $this;
     }
 }

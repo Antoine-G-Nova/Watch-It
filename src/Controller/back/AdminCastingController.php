@@ -41,8 +41,8 @@ class AdminCastingController extends AbstractController
                 'success',
                 $flashMessage
             );
-            
-            return $this->redirectToRoute('admin_casting_list');
+            $movieId = $request->request->get('casting')['movie'];
+            return $this->redirectToRoute('admin_casting_list', [ 'id' => $movieId ]);
         }
         
         $edit_mode = $casting->getId();
@@ -54,12 +54,12 @@ class AdminCastingController extends AbstractController
     }
 
     /**
-     * @Route("/casting/list", name="casting_list")
+     * @Route("/casting/list/{id}", name="casting_list")
      */
-    public function list(CastingRepository $repo)
+    public function list(CastingRepository $repo, $id)
     {
-        $castings = $repo->findAll();
-
+        $castings = $repo->findBy(['movie' => $id]);
+        
         return $this-> render('admin_casting/list_casting.html.twig', [
             'castings' => $castings,
         ]);
@@ -68,8 +68,9 @@ class AdminCastingController extends AbstractController
     /**
      * @Route("/casting/delete/{id}", name="casting_delete", requirements={"id"="\d+"})
      */
-    public function delete(Casting $casting, EntityManagerInterface $em)
+    public function delete(Request $request, Casting $casting, EntityManagerInterface $em)
     {
+
         $em->remove($casting);
         $em->flush();
 
@@ -78,6 +79,6 @@ class AdminCastingController extends AbstractController
             'Votre casting a bien été supprimé'
         );
 
-        return $this->redirectToRoute('admin_casting_list');
+        return $this->redirect($request->headers->get('referer'));
     }
 }

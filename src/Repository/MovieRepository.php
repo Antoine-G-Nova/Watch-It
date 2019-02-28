@@ -30,6 +30,11 @@ class MovieRepository extends ServiceEntityRepository
     public function findAllCustom()
     {
         $query = $this->createQueryBuilder('m')
+                ->select('m.title')
+                ->addSelect('m.id')
+                ->addSelect('m.image')
+                ->addSelect('m.release_date')
+                ->orderBy('m.release_date', 'DESC')
                 ->getQuery();
 
         return $query;

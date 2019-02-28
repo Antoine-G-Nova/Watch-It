@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 
 /** @Route("/admin", name="admin_") */
 class AdminMovieController extends AbstractController
@@ -53,9 +54,14 @@ class AdminMovieController extends AbstractController
     /**
      * @Route("/film/list", name="film_list")
      */
-    public function list(MovieRepository $repo )
+    public function list(MovieRepository $repo, PaginatorInterface $paginator, Request $request )
     {
-        $movies = $repo->findAll();
+
+        $movies = $paginator->paginate(
+            $repo->findAllCustom(),
+            $request->query->getInt('page', 1),
+            20
+        );
 
         return $this->render('admin_movie/list_film.html.twig', [
             'films_data' => $movies,

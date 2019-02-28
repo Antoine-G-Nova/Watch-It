@@ -40,7 +40,7 @@ class AdminTeamController extends AbstractController
                     $flashMessage
                 );
 
-            return $this->redirectToRoute('admin_film_list');
+            return $this->redirectToRoute('admin_team_list', ['id' => $request->request->get('team')['movie']]);
         }
 
         return $this->render('admin_team/add_team.html.twig', [
@@ -50,11 +50,11 @@ class AdminTeamController extends AbstractController
     }
 
     /**
-     * @Route("/team/list", name="team_list")
+     * @Route("/team/list/{id}", name="team_list", requirements={"id"="\d+"})
      */
-    public function list(TeamRepository $repo )
+    public function list(TeamRepository $repo, $id )
     {
-        $teams = $repo->findAll();
+        $teams = $repo->findBy(['movie' => $id]);
 
         return $this->render('admin_team/list_team.html.twig', [
             'teams_data' => $teams,
@@ -64,7 +64,7 @@ class AdminTeamController extends AbstractController
     /**
      * @Route("/team/delete/{id}", name="team_delete", requirements={"id"="\d+"})
      */
-    public function delete(Team $team, EntityManagerInterface $em )
+    public function delete(Request $request, Team $team, EntityManagerInterface $em )
     {
         $em->remove($team);
         $em->flush();
@@ -74,6 +74,6 @@ class AdminTeamController extends AbstractController
             'Votre team a bien été supprimé'
         );
 
-        return $this->redirectToRoute('admin_team_list');
+        return $this->redirect($request->headers->get('referer'));
     }
 }

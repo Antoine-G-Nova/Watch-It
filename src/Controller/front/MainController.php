@@ -28,7 +28,6 @@ class MainController extends AbstractController
 
 
         if($search->getTitle()) {
-dump($search->getName());
             $filmsData = $paginator->paginate(
                 $repo->findByTitle($search->getTitle(),$search->getName()),
                 $request->query->getInt('page', 1),

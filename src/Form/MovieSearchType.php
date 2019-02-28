@@ -20,7 +20,6 @@ class MovieSearchType extends AbstractType
                 'class' => Genre::class,
                 'choice_label' => 'name',
                 'required' => false,
-                'help' => 'Choix multiple possible',
                 'label'=> 'Genre:',
                 'attr'=> [
                     'class'=> 'form-control ml-1'

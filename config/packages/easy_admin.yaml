@@ -1,0 +1,17 @@
+easy_admin:
+    site_name: 'WatchIt BackOffice'
+    entities:
+        Films:
+            class: App\Entity\Movie
+        Genres:
+            class: App\Entity\Genre
+        Castings:
+            class: App\Entity\Casting
+        Team:
+            class: App\Entity\Team
+        Personnes:
+            class: App\Entity\Person
+        Departements:
+            class: App\Entity\Departement
+        Jobs:
+            class: App\Entity\Job

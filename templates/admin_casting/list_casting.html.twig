@@ -19,7 +19,7 @@
                 <th>Nom Personnage</th>
                 <th>Nom acteur/actrice</th>
                 <th>Film</th>
-                <th>Order credit</th>
+                <th class="text-center">Order credit</th>
                 <th class="text-right">Supprimer/Modifier</th>
             </tr>
         </thead>
@@ -29,7 +29,7 @@
                 <th class="w-25">{{ casting.characterName }}</th>
                 <td>{{ casting.person.name }}</td>
                 <td>{{ casting.movie.title }}</td>
-                <td>{{ casting.orderCredit }}</td>
+                <td class="text-center">{{ casting.orderCredit }}</td>
                 <td>
                     <a href="{{ path('admin_casting_edit', { id : casting.id }) }}" class="float-right">
                         Editer
@@ -45,6 +45,10 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
+
+<div class="container p-0">
+    <a href="{{ path('admin_film_list') }}" class="btn btn-info">Retour</a>
 </div>
 
 {% for label, messages in app.flashes %}

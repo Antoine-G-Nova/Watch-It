@@ -16,35 +16,39 @@
 </head>
 
 <body class="bg-dark">
-    <nav class="navbar navbar-expand-sm sticky-top pb-0 pt-0" id="nav-content">
-        <a class="navbar-brand font-weight-bold title mb-2" id="site-title" href="  ">
-            Watch It!
-        </a>
-        <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
-            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars text-light mt-1"></i></i></span>
-        </button>
+
+        <nav class="navbar navbar-expand-sm sticky-top pb-0 pt-0 height" id="nav-content">
+            <a class="navbar-brand font-weight-bold title mb-2" id="site-title" href="  ">
+                Watch It!
+            </a>
+            <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fas fa-bars text-light mt-1"></i></i></span>
+            </button>
 
 
-        <div class="collapse navbar-collapse align-self-end align-items-end" id="navbarTogglerDemo03">
-            <ul class="navbar-nav mr-auto mt-2  mt-lg-0">
-                <li class="nav-item active ml-1 text-center">
-                    <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
-                        href="{{ path('home') }}">Home</a>
-                </li>
-                <li class="nav-item active ml-1 text-center">
-                    <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
-                        href="{{ path('category')}}">Catégorie</a>
-                </li>
-                <li class="nav-item active ml-1 text-center">
-                    <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
-                        href="{{ path('admin_home')}}">Admin</a>
-                </li>
-            </ul>
-        </div>
+            <div class="collapse navbar-collapse align-self-end align-items-end" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2  mt-lg-0">
+                    <li class="nav-item active ml-1 text-center">
+                        <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
+                            href="{{ path('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item active ml-1 text-center">
+                        <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
+                            href="{{ path('category')}}">Catégorie</a>
+                    </li>
+                    <li class="nav-item active ml-1 text-center">
+                        <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
+                            href="{{ path('admin_home')}}">Admin</a>
+                    </li>
+                </ul>
+                <div>
+                    <div><a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a></div>
+                </div>
+            </div>
 
-    </nav>
-{% block nav %}{% endblock %}
+        </nav>
+        {% block nav %}{% endblock %}
 
 
 

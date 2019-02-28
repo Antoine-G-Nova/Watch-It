@@ -1,24 +1,47 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    # cette section definie l'endroit d'ou proviennent mes utilisateurs
     providers:
-        in_memory: { memory: ~ }
+        nova_provider:
+            entity:
+                class: App\Entity\User
+                property: username # j'indique sur mon provider quel champs va etre utilisé pour tester le nom d'utilisateur
+    
+    #definit de quelle maniere je vais m'authentifier et recuperer le provider par lequel je souhaite m'authentifier
     firewalls:
+        # cette section est dediée pour la debugtoolbar
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+
+        # cette section est l'endroit ou l'on va configurer notre connection
         main:
             anonymous: true
+            logout:
+                path: logout
+                target: home
 
-            # activate different ways to authenticate
-
-            # http_basic: true
+            # j'active l'authent par popup systeme cela n'est pas la facon la plus courante de se logger
+            provider: nova_provider # ici je cable mon provider / fournisseur avec mon mode d'authentification
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: true
+            form_login: true
+                    
+
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    # cette section va definir quel role on acces à quels page / lot de pages
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         #l'expression reguliere indique "toute les urls qui commencent par /admin"
+        - { path: ^/admin, roles: ROLE_USER } 
