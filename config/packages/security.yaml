@@ -44,4 +44,5 @@ security:
     # cette section va definir quel role on acces à quels page / lot de pages
     access_control:
          #l'expression reguliere indique "toute les urls qui commencent par /admin"
-        - { path: ^/admin, roles: ROLE_USER } 
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/film, roles: ROLE_ADMIN }
