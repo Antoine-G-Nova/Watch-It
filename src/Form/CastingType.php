@@ -16,7 +16,7 @@ class CastingType extends AbstractType
     {
         $builder
             ->add('character_name', TextType::class,[
-                'label' => 'Nom du personnage',
+                'label'       => 'Nom du personnage',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le champ ne doit pas être vide'

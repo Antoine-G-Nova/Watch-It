@@ -33,14 +33,14 @@ class MovieEditType extends AbstractType
             ->add('image')
 
             ->add('overview', TextareaType::class, [
-                'label' => 'Résumé',
+                'label'       => 'Résumé',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le champ ne doit pas être vide'
                     ]),
                     new Length([
-                        'min' => 15,
-                        'max' => 1500,
+                        'min'        => 15,
+                        'max'        => 1500,
                         'minMessage' => 'Pas assez de caractères, attendu : au moins {{ limit }}',
                         'maxMessage' => 'Trop de caractères, attendu: max {{ limit }}',
                     ])

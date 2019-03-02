@@ -15,18 +15,29 @@ class RegistrationType extends AbstractType
         $builder
             ->add('email', null, [
                 'label' => 'Adresse email',
-                'attr' => [
+                'attr'  => [
                     'placeholder' => 'Votre adresse email'
                 ]
             ])
+
             ->add('username', null, [
                 'label' => 'Nom d\'utilisateur',
-                'attr' => [
+                'attr'  => [
                     'placeholder' => 'Votre nom d\'utilisateur'
                 ]
             ])
-            ->add('password', PasswordType::class)
-            ->add('confirm_password', PasswordType::class)
+
+            ->add('password', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => '*******'
+                ]
+            ])
+
+            ->add('confirm_password', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => '*******'
+                ]
+            ])
         ;
     }
 

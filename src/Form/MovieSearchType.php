@@ -17,20 +17,20 @@ class MovieSearchType extends AbstractType
     {
         $builder
             ->add('name', EntityType::class, [
-                'class' => Genre::class,
+                'class'        => Genre::class,
                 'choice_label' => 'name',
-                'required' => false,
-                'label'=> 'Genre:',
-                'attr'=> [
-                    'class'=> 'form-control ml-1'
+                'required'     => false,
+                'label'        => 'Genre : ',
+                'attr'         => [
+                    'class' => 'form-control ml-1'
                 ]
             ])
             ->add('title', TextType::class, [
-                'label' => 'Titre',
-                'required' => false,
+                'label'       => 'Titre :',
+                'required'    => false,
                 'constraints' =>
                     new Length([
-                        'min' => 3,
+                        'min'        => 3,
                         'minMessage' => 'Au moins {{ limit }}'
                     ])
             ])

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <link rel="stylesheet" href=" {{ asset('css/style.css')}} ">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
@@ -37,27 +36,40 @@
                         <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
                             href="{{ path('category')}}">Catégorie</a>
                     </li>
-                    <li class="nav-item active ml-1 text-center">
-                        <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
-                            href="{{ path('admin_home')}}">Admin</a>
-                    </li>
+
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item active ml-1 text-center">
+                            <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
+                                href="{{ path('admin_home')}}">Admin</a>
+                        </li>
+                    {% endif %}
+
                 </ul>
 
-                {% if is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
-                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">Bienvenu {{ app.user.username }} (Administrateur)</div>
-                {% endif %}
-
-                {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
-                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">Bienvenu {{ app.user.username }} (Administrateur)</div>
-                {% endif %}
-
                 {% if not app.user %}
-                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top" >Bienvenu visiteur</div>
+                    <div class="d-none d-md-block mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top" >Bienvenu visiteur</div>
+                {% else %}
+
+                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
+                        <div class="d-none d-md-block mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">
+                            Bienvenu {{ app.user.username }} (Membre)
+                        </div>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="d-none d-md-block mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">
+                            Bienvenu {{ app.user.username }} (Administrateur)
+                        </div>
+                    {% endif %}
+
                 {% endif %}
                 
                 {% if not app.user %}
                     <div>
                         <a class="btn btn-primary btn-sm mb-1" href="{{ path('login') }}">Connexion</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-dark btn-sm mb-1 ml-1" href="{{ path('registration') }}">S'inscrire</a>
                     </div>
                 {% endif %}
                 {% if app.user %}
@@ -105,7 +117,6 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     {% block javascripts %}{% endblock %}
 </body>

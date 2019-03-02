@@ -6,7 +6,4 @@ $(window).scroll(function() {
     $('.navbar').removeClass('shrink').addClass('height'); }
 });
 
-$('select').select2({
-    theme:"classic"
-});
 

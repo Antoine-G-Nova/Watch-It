@@ -21,8 +21,8 @@ class JobType extends AbstractType
                         'message' => 'Le champ ne doit pas être vide'
                     ]),
                     new Length([
-                        'min' => 3,
-                        'max' => 30,
+                        'min'        => 3,
+                        'max'        => 30,
                         'minMessage' => 'Pas assez de caractères, attendu : au moins {{ limit }}',
                         'maxMessage' => 'Trop de caractères, attendu: max {{ limit }}',
                     ])

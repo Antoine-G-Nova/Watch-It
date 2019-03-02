@@ -1,8 +1,8 @@
-<div class="row justify-content-center justify-content-md-around">
+<div class="d-flex flex-wrap justify-content-center justify-content-md-around">
 
     {% for film in films_data %}
 
-    <div class="col-sm-6 col-md-3  col-xl-2 my-3 mx-3 p-0 text-center">
+    <div class=" my-3 mx-3 p-0 text-center">
         <a href=" {{ path('film_show', { id : film.id })}} ">
             <img src=" {{ film.image }} " alt="..." class="scale rounded-lg shadow-lg" style="width: 230px">
         </a>
@@ -11,8 +11,8 @@
 
     {% else %}
         <h3 class="text-light">Aucun Résultat</h3>
-
     {% endfor %}
+    
 </div>
 
 {# display navigation #}

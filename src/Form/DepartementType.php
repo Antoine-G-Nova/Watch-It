@@ -18,7 +18,7 @@ class DepartementType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du département',
+                'label'       => 'Nom du département',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Le champ ne doit pas être vide'

@@ -7,7 +7,7 @@
 
     <div class="row">
 
-        <div class=" col-2 p-3 text-light bg-darker ">
+        <div class=" col-12 col-md-4 col-lg-3 col-xl-2 p-3 text-light bg-darker ">
 
             <h5 class="text-center p-2 bg-dark mt-3 mb-3">Rechercher par :</h5>
             {{form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -21,11 +21,11 @@
 
             {{form_end(form)}}
 
-            <h5 class="text-center text-light p-2 bg-dark mt-4 mb-3">Derniers ajouts :</h5>
+            <h5 class="d-none d-md-block text-center text-light p-2 bg-dark mt-4 mb-3">Derniers ajouts :</h5>
 
             {% for movie in lastest_movies %}
 
-            <div class="media mb-3">
+            <div class="d-none d-md-block media mb-3">
                 <img src="{{ movie.image }}" class="align-self-center mr-3" style="width:25px">
                 <div class="media-body align-self-center mr-3">
                     <a href="{{ path('film_show', { id : movie.id }) }}"><h6 class="mt-0 text-light ">{{ movie.title }}</h6></a>
@@ -36,9 +36,10 @@
 
         </div>
 
-        <div class="col-10 px-3">
+        <div class="col-12 col-md-8 col-lg-9 col-xl-10 px-3">
 
             <h2 class="text-light mt-4 ml-4">Films populaires</h2>
+
             {% include "front/index.template.html.twig" %}
 
         </div>
