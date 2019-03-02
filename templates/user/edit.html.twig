@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1 class="text-light text-center mt-5">Edit User</h1>
+
+    <div class="container bg-light mt-5 px-0 rounded">
+
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('user_index') }}" class="btn btn-dark m-2">back to list</a>
+    </div>
+
+{% endblock %}

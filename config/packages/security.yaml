@@ -2,47 +2,42 @@ security:
     encoders:
         App\Entity\User:
             algorithm: bcrypt
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    # cette section definie l'endroit d'ou proviennent mes utilisateurs
     providers:
-        nova_provider:
+        movie_db:
             entity:
                 class: App\Entity\User
-                property: username # j'indique sur mon provider quel champs va etre utilisé pour tester le nom d'utilisateur
-    
-    #definit de quelle maniere je vais m'authentifier et recuperer le provider par lequel je souhaite m'authentifier
+                property: email
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+
     firewalls:
-        # cette section est dediée pour la debugtoolbar
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
 
-        # cette section est l'endroit ou l'on va configurer notre connection
+
         main:
             anonymous: true
+
+            provider: movie_db
+
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: home
+                always_use_default_target_path: false
+                use_referer: true
+
             logout:
                 path: logout
                 target: home
 
-            # j'active l'authent par popup systeme cela n'est pas la facon la plus courante de se logger
-            provider: nova_provider # ici je cable mon provider / fournisseur avec mon mode d'authentification
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
-            
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            form_login: true
-                    
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     # cette section va definir quel role on acces à quels page / lot de pages
     access_control:
-         #l'expression reguliere indique "toute les urls qui commencent par /admin"
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/film, roles: ROLE_ADMIN }
+        - { path: ^/film, roles: ROLE_USER }
+        - { path: ^/category, roles: ROLE_USER }
+         #l'expression reguliere indique "toute les urls qui commencent par /admin"

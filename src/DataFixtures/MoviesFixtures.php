@@ -61,7 +61,7 @@ class MoviesFixtures extends Fixture implements FixtureGroupInterface
         $manager->flush(); // J'enregistre
 
         // Boucle pour créer les films et les acteurs associés 
-        for( $j = 1 ; $j <= 30 ; $j++ ) {
+        for( $j = 1 ; $j <= 3 ; $j++ ) {
 
             // Requête pour obtenir une liste de film.
             $filmResponse = Unirest\Request::get('https://api.themoviedb.org/3/discover/movie?api_key=68d344e1b7babcb0dba7864b416715d5&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page='.$j);

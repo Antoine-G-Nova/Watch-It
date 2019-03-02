@@ -1,96 +1,120 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *  fields = {"email"},
+ *  message = "L'email que vous avez indiqué est déjà utilisé"
+ * )
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=254, unique=true)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $isActive;
+    private $username;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = "4", minMessage = "Doit contenir au moins 8 caractères")
+     *
+     */
+    private $password;
+
+    public function __construt()
     {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
+        $this->roles = [''];
     }
 
-    public function getUsername()
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message = "Vos mots de passent doivent être identiques")
+     */
+    public $confirm_password;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = ['ROLE_USER'];
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function getSalt()
+    public function setUsername(string $username): self
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
+        $this->username = $username;
+
+        return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function getRoles()
+    public function setPassword(string $password): self
     {
-        return ['ROLE_ADMIN'];
+        $this->password = $password;
+
+        return $this;
     }
 
-    public function eraseCredentials()
-    {
+    public function getRoles() {
+        return  $this->roles;
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
+    public function setRoles(array $roles): self
     {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ]);
+        $this->roles = $roles;
+
+        return $this;
+    }
+    
+    public function eraseCredentials() {}
+
+    public function getSalt(){}
+
+    public function __toString()
+    {
+        return $this->roles;
     }
 
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized, ['allowed_classes' => false]);
-    }
 }

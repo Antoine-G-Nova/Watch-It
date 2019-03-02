@@ -42,16 +42,34 @@
                             href="{{ path('admin_home')}}">Admin</a>
                     </li>
                 </ul>
-                <div>
-                    <div><a class="btn btn-primary" href="{{ path('app_login') }}">Connexion</a></div>
-                </div>
+
+                {% if is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
+                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">Bienvenu {{ app.user.username }} (Administrateur)</div>
+                {% endif %}
+
+                {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
+                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top">Bienvenu {{ app.user.username }} (Administrateur)</div>
+                {% endif %}
+
+                {% if not app.user %}
+                    <div class="mr-auto p-2 font-weight-bold bg-light shadow border-top border-right border-left rounded-top" >Bienvenu visiteur</div>
+                {% endif %}
+                
+                {% if not app.user %}
+                    <div>
+                        <a class="btn btn-primary btn-sm mb-1" href="{{ path('login') }}">Connexion</a>
+                    </div>
+                {% endif %}
+                {% if app.user %}
+                    <div>
+                        <a class="btn btn-danger btn-sm mb-1" href="{{ path('logout') }}">Déconnexion</a>
+                    </div>
+                {% endif %}
+                
             </div>
 
         </nav>
         {% block nav %}{% endblock %}
-
-
-
 
     {% block body %}{% endblock %}
 
