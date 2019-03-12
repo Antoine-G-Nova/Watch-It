@@ -44,25 +44,30 @@ class User implements UserInterface
      */
     private $password;
 
-    public function __construt()
-    {
-        $this->roles = [''];
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     /**
      * @Assert\EqualTo(propertyPath="password", message = "Vos mots de passent doivent être identiques")
      */
     public $confirm_password;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string")
      */
-    private $roles = ['ROLE_USER'];
+    private $role;
+
+
+    public function getRoles() {
+        return [$this->role];
+    }
+    
+    public function __construt()
+    {
+        $this->role = 'ROLE_USER';
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getEmail(): ?string
     {
@@ -100,17 +105,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles() {
-        return  $this->roles;
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-    
     public function eraseCredentials() {}
 
     public function getSalt(){}
@@ -120,4 +114,24 @@ class User implements UserInterface
         return $this->roles;
     }
 
+
+    /**
+     * Get the value of role
+     */ 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set the value of role
+     *
+     * @return  self
+     */ 
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
 }

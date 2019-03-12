@@ -54,7 +54,7 @@ class MoviesFixtures extends Fixture
             $user->setUsername("Admin")
                  ->setEmail($faker->email)
                  ->setPassword($password)
-                 ->setRoles(['ROLE_ADMIN']);
+                 ->setRole('ROLE_ADMIN');
             $manager->persist($user);
 
         
@@ -77,7 +77,7 @@ class MoviesFixtures extends Fixture
 
 
         // Boucle pour créer les films et les acteurs associés 
-        for( $j = 1 ; $j <= 20 ; $j++ ) {
+        for( $j = 1 ; $j <= 10 ; $j++ ) {
 
             // Requête pour obtenir une liste de film.
             $filmResponse = Unirest\Request::get('https://api.themoviedb.org/3/discover/movie?api_key=68d344e1b7babcb0dba7864b416715d5&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page='.$j);
