@@ -20,6 +20,12 @@ body {
     transition: 1s;
 }
 
+/* Home */
+
+.film-card {
+    width: 250px;
+}
+
 /* Page film */
 .cat-link {
     background-color: rgb(32, 32, 32);

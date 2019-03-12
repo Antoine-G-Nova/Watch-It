@@ -25,10 +25,10 @@
 
             {% for movie in lastest_movies %}
 
-            <div class="d-none d-md-block media mb-3">
+            <div class="d-none d-md-flex media mb-3">
                 <img src="{{ movie.image }}" class="align-self-center mr-3" style="width:25px">
                 <div class="media-body align-self-center mr-3">
-                    <a href="{{ path('film_show', { id : movie.id }) }}"><h6 class="mt-0 text-light ">{{ movie.title }}</h6></a>
+                    <a href="{{ path('film_show', { slug : movie.slug }) }}"><h6 class="mt-0 text-light ">{{ movie.title }}</h6></a>
                 </div>
             </div>
 

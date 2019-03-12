@@ -55,6 +55,16 @@ class Movie
      */
     private $release_date;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $rating;
+
    
 
     
@@ -208,6 +218,30 @@ class Movie
     public function setReleaseDate(\DateTimeInterface $release_date): self
     {
         $this->release_date = $release_date;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getRating(): ? string
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?string $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }

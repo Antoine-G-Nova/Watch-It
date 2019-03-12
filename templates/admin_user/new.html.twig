@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+    {% include 'admin_home/admin_nav.html.twig' %}
+{% endblock %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1 class="text-light text-center mt-5">Créer nouvel utilisateur</h1>
+<div class="container bg-light mt-5 px-0 rounded">
+    {{ include('admin_user/_form.html.twig') }}
+
+    <a href="{{ path('user_index') }}" class="btn btn-dark m-2">Retour</a>
+</div>
+{% endblock %}

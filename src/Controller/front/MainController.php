@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\MovieSearchType;
 use App\Entity\MovieSearch;
 use App\Form\GenreType;
+use App\Utils\Slugger;
 
 class MainController extends AbstractController
 {
@@ -60,13 +61,14 @@ class MainController extends AbstractController
 
 
     /**
-     * @Route("/film/{id}", name="film_show", requirements={"id"="\d+"})
+     * @Route("/film/{slug}", name="film_show")
      */
     public function show(Movie $movie)
     {
         // Je récupère le nom du réalisateur
         $teams = $movie->getTeams();
         $director = null;
+
         foreach($teams as $team){
 
             if($team->getJob()->getName() == 'Director'){

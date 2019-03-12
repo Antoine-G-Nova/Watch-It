@@ -28,6 +28,7 @@ class GenreRepository extends ServiceEntityRepository
                  ->addSelect('m.id')
                  ->addSelect('m.image')
                  ->addSelect('c.name')
+                 ->addSelect('m.slug')
                  ->where('c.id = :id')
                  ->setParameter('id', $id)
                  ->getQuery();

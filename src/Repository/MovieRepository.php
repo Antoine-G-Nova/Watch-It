@@ -34,6 +34,7 @@ class MovieRepository extends ServiceEntityRepository
                 ->addSelect('m.id')
                 ->addSelect('m.image')
                 ->addSelect('m.release_date')
+                ->addSelect('m.slug')
                 ->orderBy('m.release_date', 'DESC')
                 ->getQuery();
 
@@ -52,6 +53,7 @@ class MovieRepository extends ServiceEntityRepository
                 ->select('m.title')
                 ->addSelect('m.id')
                 ->addSelect('m.image')
+                ->addSelect('m.slug')
                 ->where('g.id = :id')
                 ->setParameter('id', $id)
                 ->getQuery();
@@ -63,8 +65,8 @@ class MovieRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('m')
                 ->select('m.title')
-                ->addSelect('m.id')
                 ->addSelect('m.image')
+                ->addSelect('m.slug')
                 ->where('m.title LIKE :word')
                 ->setParameter('word', '%'.$title.'%');
 

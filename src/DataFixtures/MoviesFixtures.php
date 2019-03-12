@@ -6,9 +6,11 @@ use Unirest;
 use Faker\Factory;
 use App\Entity\Job;
 use App\Entity\Team;
+use App\Entity\User;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Utils\Slugger;
 use App\Entity\Casting;
 use App\Entity\Departement;
 use App\Repository\JobRepository;
@@ -18,31 +20,44 @@ use App\Repository\DepartementRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-class MoviesFixtures extends Fixture implements FixtureGroupInterface
+class MoviesFixtures extends Fixture
 {
 
     private $repo;
     private $depRepo;
     private $jobRepo;
+    private $slugger;
+    private $encoder;
 
-    public static function getGroups(): array
-    {
-        return ['group2'];
-    }
 
-    public function __construct(GenreRepository $genRepo, DepartementRepository $repository, JobRepository $jobRepo) {
+    public function __construct(GenreRepository $genRepo, DepartementRepository $repository, JobRepository $jobRepo, Slugger $slugger, UserPasswordEncoderInterface $encoder) {
 
         $this->repo = $genRepo;
         $this->depRepo = $repository;
         $this->jobRepo = $jobRepo;
+        $this->slugger = $slugger;
+        $this->encoder = $encoder;
     }
 
 
     public function load(ObjectManager $manager)
     {
+
         $faker = Factory::create();
+
+        // Je créé un admin
+        $user = new User();
+            $password = $this->encoder->encodePassword($user, 'toto');
+            $user->setUsername("Admin")
+                 ->setEmail($faker->email)
+                 ->setPassword($password)
+                 ->setRoles(['ROLE_ADMIN']);
+            $manager->persist($user);
+
+        
 
         // Requête pour obtenir tous les genres.
         $genresResponse = Unirest\Request::get('https://api.themoviedb.org/3/genre/movie/list?api_key=68d344e1b7babcb0dba7864b416715d5&language=fr');
@@ -60,8 +75,9 @@ class MoviesFixtures extends Fixture implements FixtureGroupInterface
 
         $manager->flush(); // J'enregistre
 
+
         // Boucle pour créer les films et les acteurs associés 
-        for( $j = 1 ; $j <= 3 ; $j++ ) {
+        for( $j = 1 ; $j <= 20 ; $j++ ) {
 
             // Requête pour obtenir une liste de film.
             $filmResponse = Unirest\Request::get('https://api.themoviedb.org/3/discover/movie?api_key=68d344e1b7babcb0dba7864b416715d5&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page='.$j);
@@ -73,12 +89,13 @@ class MoviesFixtures extends Fixture implements FixtureGroupInterface
                 $newFilm = new Movie;
                 $newFilm->setTitle($film->{'title'})
                         ->setImage('https://image.tmdb.org/t/p/w500/'. $film->{'poster_path'})
-                        ->setReleaseDate(new \DateTime($film->{'release_date'}));
+                        ->setReleaseDate(new \DateTime($film->{'release_date'}))
+                        ->setSlug($this->slugger->slugify($film->{'title'}));
                 
                 if($film->{'overview'}) {
 
                     $newFilm->setOverview($film->{'overview'});
-                }                        
+                }
                 $manager->persist($newFilm);
 
                 

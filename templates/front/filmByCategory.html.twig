@@ -12,8 +12,8 @@
 
         {% for film in films_data %}
 
-        <div class="col-6 col-sm-4 col-md-3  col-xl-2 my-2 my-md-4 mx-4 p-0 text-center">
-            <a href=" {{ path('film_show', { id : film.id })}} ">
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2 my-2 my-md-4 mx-4 p-0 text-center film-card">
+            <a href=" {{ path('film_show', { slug : film.slug })}} ">
                 <img src=" {{ film.image }} " alt="..." class="scale rounded-lg shadow-lg" style="width: 230px">
             </a>
             <h5 class="text-light"> {{ film.title }} </h5>

@@ -37,10 +37,10 @@
                             href="{{ path('category')}}">Catégorie</a>
                     </li>
 
-                    {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item active ml-1 text-center">
-                            <a class="nav-link bg-dark font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
-                                href="{{ path('admin_home')}}">Admin</a>
+                            <a class="nav-link bg-secondary font-weight-bold shadow text-warning border-top border-right border-left border-dark rounded-top"
+                                href="{{ path('admin_home')}}">Back Office</a>
                         </li>
                     {% endif %}
 
@@ -64,7 +64,7 @@
 
                 {% endif %}
                 
-                {% if not app.user %}
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div>
                         <a class="btn btn-primary btn-sm mb-1" href="{{ path('login') }}">Connexion</a>
                     </div>
@@ -72,7 +72,7 @@
                         <a class="btn btn-dark btn-sm mb-1 ml-1" href="{{ path('registration') }}">S'inscrire</a>
                     </div>
                 {% endif %}
-                {% if app.user %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div>
                         <a class="btn btn-danger btn-sm mb-1" href="{{ path('logout') }}">Déconnexion</a>
                     </div>

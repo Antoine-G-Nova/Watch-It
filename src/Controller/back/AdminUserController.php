@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\back;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
+ * @Route("/admin/user")
  */
-class UserController extends AbstractController
+class AdminUserController extends AbstractController
 {
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('admin_user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('admin_user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('admin_user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -74,7 +74,7 @@ class UserController extends AbstractController
             ]);
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('admin_user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

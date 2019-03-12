@@ -14,7 +14,6 @@ class AdminHomeController extends AbstractController
     public function index()
     {
         return $this->render('admin_home/admin_index.html.twig', [
-            
         ]);
     }
 

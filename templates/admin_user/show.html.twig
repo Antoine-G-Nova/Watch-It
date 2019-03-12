@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block nav %}
+    {% include 'admin_home/admin_nav.html.twig' %}
+{% endblock %}
+
 {% block title %}User{% endblock %}
 
 {% block body %}
-<h1 class="text-light text-center mt-5">User</h1>
+<h1 class="text-light text-center mt-5">Utilisateur</h1>
 <div class="container bg-light mt-5 px-0 rounded">
     <table class="table">
         <tbody>
@@ -26,12 +30,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_index') }}" class="btn btn-dark m-2">back to list</a>
+    <a href="{{ path('user_index') }}" class="btn btn-dark m-2">Retour</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-success">edit</a>
+    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-success">Editer</a>
 
 </div>
-<div class="container p-1 pt-2">
-    {{ include('user/_delete_form.html.twig') }}
+<div class="container d-flex justify-content-end p-1 pt-2">
+    {{ include('admin_user/_delete_form.html.twig') }}
 </div>
 {% endblock %}

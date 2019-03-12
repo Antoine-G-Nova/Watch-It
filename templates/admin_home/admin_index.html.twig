@@ -8,14 +8,14 @@
 {% block body %}
 
 
-<div class="container w-50 my-5 py-4">
+<div class="container w-md-50 my-5 py-4">
     <div class="card mb-3">
         <div class="card-body ">
             <h4>
                 Movie
+            </h4>
                 <a href="{{ path('admin_film_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
                 <a href="{{ path('admin_film_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
-            </h4>
             
             
         </div>
@@ -25,9 +25,9 @@
         <div class="card-body ">
             <h4>
                 Département
+            </h4>
                 <a href="{{ path('admin_departement_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
                 <a href="{{ path('admin_departement_add') }} "class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
-            </h4>
         </div>
     </div>
 
@@ -35,9 +35,20 @@
         <div class="card-body ">
             <h4>
                 Job
+            </h4>
                 <a href="{{ path('admin_job_list') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
                 <a href="{{ path('admin_job_add') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
+            
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body ">
+            <h4>
+                Utilisateur
             </h4>
+                <a href="{{ path('user_index') }}" class="btn btn-dark mr-3 float-right"><i class="fas fa-eye"></i> Voir la liste</a>
+                <a href="{{ path('user_new') }}" class="btn btn-success mr-3 float-right"><i class="fas fa-edit"></i> Créer nouveau</a>
             
         </div>
     </div>

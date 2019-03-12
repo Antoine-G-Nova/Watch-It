@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Utils\Slugger;
 
 /** @Route("/admin", name="admin_") */
 class AdminMovieController extends AbstractController
@@ -18,7 +19,7 @@ class AdminMovieController extends AbstractController
      * @Route("/film/add", name="film_add",methods= {"GET", "POST"})
      * @Route("/film/edit/{id}", name="film_edit", methods= {"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function add(Request $request, EntityManagerInterface $manager, Movie $movie = null)
+    public function add(Request $request, EntityManagerInterface $manager, Movie $movie = null, Slugger $slugger)
     {
         $flashMessage = 'Votre film a bien été modifié';
 
@@ -27,11 +28,13 @@ class AdminMovieController extends AbstractController
             $flashMessage = 'Votre film a bien été créé';
         }
         
-        
         $form = $this->createForm(MovieEditType::class, $movie);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+
+            $movie->setSlug($slugger->slugify($movie->getTitle()));
+
             $manager->persist($movie);
             $manager->flush();
             
@@ -60,7 +63,7 @@ class AdminMovieController extends AbstractController
         $movies = $paginator->paginate(
             $repo->findAllCustom(),
             $request->query->getInt('page', 1),
-            20
+            10
         );
 
         return $this->render('admin_movie/list_film.html.twig', [
